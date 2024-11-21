@@ -31,7 +31,7 @@ namespace LoadDWVentas.WorkerService
 
                         if (!result.Success)
                         {
-                            //enviar la notificacion //
+
                         }
 
                     }

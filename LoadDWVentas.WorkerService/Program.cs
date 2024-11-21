@@ -9,7 +9,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var builder = Host.CreateApplicationBuilder(args);
+        CreateHostBuilder(args).Build().Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -24,5 +24,6 @@ internal class Program
 
             services.AddScoped<IDataServiceDwVentas, DataServiceDwVentas>();
 
+            services.AddHostedService<Worker>();
         });
 }
