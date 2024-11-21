@@ -41,14 +41,14 @@ namespace LoadDWVentas.Data.Services
 
             try
             {
-                var employees = await _northwindContext.Employees.AsNoTracking().Select(emp => new DimEmployee()
+                var employees = await _northwindContext.Employees.AsNoTracking().Select(emp => new dim_Employee()
                 {
-                    EmployeeId = emp.EmployeeId,
-                    FirstName = emp.FirstName,
-                    LastName = emp.LastName,
+                    pk_employee_id = emp.EmployeeId,
+                    first_name = emp.FirstName,
+                    last_name = emp.LastName,
                 }).ToListAsync();
 
-                await _salesContext.DimEmployees.AddRangeAsync(employees);
+                await _salesContext.dim_Employees.AddRangeAsync(employees);
                 await _salesContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace LoadDWVentas.Data.Services
             {
                 var productCategories = await(from product in _northwindContext.Products
                                               join category in _northwindContext.Categories on product.CategoryId equals category.CategoryId
-                                              select new DimProductCategory()
+                                              select new dim_ProductCategories()
                                               {
                                                   CategoryId = category.CategoryId,
                                                   ProductName = product.ProductName,
@@ -75,7 +75,7 @@ namespace LoadDWVentas.Data.Services
                                                   ProductId = product.ProductId
                                               }).AsNoTracking().ToListAsync();
 
-                await _salesContext.DimProductCategories.AddRangeAsync(productCategories);
+                await _salesContext.dim_ProductCategories.AddRangeAsync(productCategories);
                 await _salesContext.SaveChangesAsync();
             }
             catch (Exception ex)

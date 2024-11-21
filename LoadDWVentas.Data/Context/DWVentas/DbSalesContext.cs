@@ -6,8 +6,8 @@ namespace LoadDWVentas.Data.Context.DWVentas
     public class DbSalesContext : DbContext
     {
         #region "DbSets"
-        public DbSet<DimEmployee> DimEmployees { get; set; }
-        public DbSet<DimProductCategory> DimProductCategories { get; set; }
+        public DbSet<dim_Employee> dim_Employees { get; set; }
+        public DbSet<dim_ProductCategories> dim_ProductCategories { get; set; }
         #endregion
         public DbSalesContext(DbContextOptions<DbSalesContext> options) : base(options)
         {

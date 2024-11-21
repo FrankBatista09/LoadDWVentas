@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LoadDWVentas.Data.Entities.Northwind
 {
     [Table("employees")]
     public class Employees
     {
+        [Key]
         public int EmployeeId { get; set; }
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
