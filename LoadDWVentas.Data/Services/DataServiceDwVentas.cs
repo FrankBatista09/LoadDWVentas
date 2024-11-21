@@ -17,12 +17,25 @@ namespace LoadDWVentas.Data.Services
             _northwindContext = northwindContext;
             _salesContext = salesContext;
         }
-        public Task<OperactionResult> LoadDHW()
+        public async Task<OperactionResult> LoadDHW()
         {
-            throw new NotImplementedException();
+            OperactionResult result = new OperactionResult();
+            try
+            {
+                await LoadDimProductCategory();
+                await LoadDimEmployee();
+            }
+            catch (Exception ex)
+            {
+
+                result.Success = false;
+                result.Message = $"Error cargando el DWH Ventas. {ex.Message}";
+            }
+
+            return result;
         }
 
-        public async Task<OperactionResult> LoadDimEmployee()
+        private async Task<OperactionResult> LoadDimEmployee()
         {
             OperactionResult result = new();
 
@@ -46,7 +59,7 @@ namespace LoadDWVentas.Data.Services
             return result;
         }
 
-        public async Task<OperactionResult> LoadDimProductCategory()
+        private async Task<OperactionResult> LoadDimProductCategory()
         {
             OperactionResult result = new();
 
