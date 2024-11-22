@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LoadDWVentas.Data.Entities.Northwind
 {
-    [Table("employees")]
+    [Table("Employees")]
     public class Employees
     {
         [Key]

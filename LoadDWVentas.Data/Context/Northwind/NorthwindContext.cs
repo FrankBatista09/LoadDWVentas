@@ -9,6 +9,7 @@ namespace LoadDWVentas.Data.Context.Northwind
         public DbSet<Category> Categories { get; set; }
         public DbSet<Employees> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Customers> Customers { get; set; } 
         #endregion
         public NorthwindContext(DbContextOptions<NorthwindContext> options) : base(options)
         {
