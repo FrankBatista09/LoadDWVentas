@@ -9,11 +9,39 @@ namespace LoadDWVentas.Data.Context.Northwind
         public DbSet<Category> Categories { get; set; }
         public DbSet<Employees> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Customers> Customers { get; set; } 
+        public DbSet<Customers> Customers { get; set; }
+        public DbSet<Vwventas> Vwventas { get; set; }
         #endregion
         public NorthwindContext(DbContextOptions<NorthwindContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Vwventas>(entity =>
+            {
+                entity
+                    .HasNoKey()
+                    .ToView("Vwventas");
+
+                entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasMaxLength(40);
+                entity.Property(e => e.CustomerId)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .IsFixedLength()
+                    .HasColumnName("CustomerID");
+                entity.Property(e => e.CustomerName)
+                    .IsRequired()
+                    .HasMaxLength(40);
+                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+                entity.Property(e => e.EmployeeName)
+                    .IsRequired()
+                    .HasMaxLength(31);
+                entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
+            });
         }
     }
 }

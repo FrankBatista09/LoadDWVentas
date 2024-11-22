@@ -23,12 +23,15 @@ namespace LoadDWVentas.Data.Services
             OperactionResult result = new OperactionResult();
             try
             {
-                await ClearTable(_salesContext.dim_ProductCategories);
-                await ClearTable(_salesContext.dim_Customers);
-                await ClearTable(_salesContext.dim_Employees);
-                await LoadDimProductCategory();
-                await LoadDimCustomers();
-                await LoadDimEmployee();
+                //await ClearTable(_salesContext.dim_ProductCategories);
+                //await ClearTable(_salesContext.dim_Customers);
+                //await ClearTable(_salesContext.dim_Employees);
+
+                //await LoadDimProductCategory();
+                //await LoadDimCustomers();
+                //await LoadDimEmployee();
+
+                await LoadFactSales();
             }
             catch (Exception ex)
             {
@@ -132,5 +135,22 @@ namespace LoadDWVentas.Data.Services
                 Console.WriteLine($"Error al vaciar la tabla {dbSet.EntityType.GetTableName()}: {ex.Message}");
             }
         }
+
+        private async Task<OperactionResult> LoadFactSales()
+        {
+            OperactionResult result = new();
+
+            try
+            {
+                var ventas = await _northwindContext.Vwventas.AsNoTracking().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Error cargando el fact de Sales.";
+            }
+            return result;
+        }
+
     }
 }
