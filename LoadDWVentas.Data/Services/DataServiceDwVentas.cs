@@ -143,6 +143,40 @@ namespace LoadDWVentas.Data.Services
             try
             {
                 var ventas = await _northwindContext.Vwventas.AsNoTracking().ToListAsync();
+                int[] ordersId = await _salesContext.fact_Orders.Select(cd => cd.pk_order_id).ToArrayAsync();
+
+                if (ordersId.Any())
+                {
+                    await _salesContext.fact_Orders.Where(cd => ordersId.Contains(cd.pk_order_id))
+                                                  .AsNoTracking()
+                                                  .ExecuteDeleteAsync();
+                }
+
+                foreach (var venta in ventas)
+                {
+                    var customer = await _salesContext.dim_Customers.SingleOrDefaultAsync(cust => cust.pk_customer_id == venta.CustomerId);
+                    var employee = await _salesContext.dim_Employees.SingleOrDefaultAsync(emp => emp.pk_employee_id == venta.EmployeeId);
+
+                    if (customer == null || employee == null)
+                    {
+                        // Handle the case where customer or employee is not found
+                        continue; // Skip to the next venta
+                    }
+
+                    fact_orders factOrder = new fact_orders()
+                    {
+                        fact_sales_quantity = venta.Cantidad.Value,
+                        fk_customer_id = customer.pk_customer_id,
+                        fk_employee_id = employee.pk_employee_id,
+                        fact_sales_discount = (float?)Convert.ToDecimal(venta.TotalVentas)
+                    };
+
+                    await _salesContext.fact_Orders.AddAsync(factOrder);
+                    await _salesContext.SaveChangesAsync();
+                }
+
+
+            
             }
             catch (Exception ex)
             {
