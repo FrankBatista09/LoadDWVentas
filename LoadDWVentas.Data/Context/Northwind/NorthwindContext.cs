@@ -10,7 +10,7 @@ namespace LoadDWVentas.Data.Context.Northwind
         public DbSet<Employees> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Customers> Customers { get; set; }
-        public DbSet<Vwventas> Vwventas { get; set; }
+        public DbSet<Vwvventas> Vwventas { get; set; }
         #endregion
         public NorthwindContext(DbContextOptions<NorthwindContext> options) : base(options)
         {
@@ -19,11 +19,11 @@ namespace LoadDWVentas.Data.Context.Northwind
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Vwventas>(entity =>
+            modelBuilder.Entity<Vwvventas>(entity =>
             {
                 entity
                     .HasNoKey()
-                    .ToView("Vwventas");
+                    .ToView("Vwvventas");
 
                 entity.Property(e => e.CompanyName)
                     .IsRequired()
@@ -40,6 +40,10 @@ namespace LoadDWVentas.Data.Context.Northwind
                 entity.Property(e => e.EmployeeName)
                     .IsRequired()
                     .HasMaxLength(31);
+                entity.Property(e => e.ProductID).HasColumnName("ProductID");
+                entity.Property(e => e.ProductName)
+                    .IsRequired()
+                    .HasMaxLength(40);
                 entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
             });
         }

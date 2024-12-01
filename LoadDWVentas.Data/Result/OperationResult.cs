@@ -1,8 +1,8 @@
 ﻿namespace LoadDWVentas.Data.Result
 {
-    public class OperactionResult
+    public class OperationResult
     {
-        public OperactionResult()
+        public OperationResult()
         {
             this.Success = true;
         }

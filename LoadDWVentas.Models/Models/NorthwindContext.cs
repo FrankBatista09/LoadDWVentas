@@ -38,6 +38,10 @@ public partial class NorthwindContext : DbContext
             entity.Property(e => e.EmployeeName)
                 .IsRequired()
                 .HasMaxLength(31);
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(40);
             entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
         });
 

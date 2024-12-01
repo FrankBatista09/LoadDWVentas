@@ -1,6 +1,6 @@
 ﻿namespace LoadDWVentas.Data.Entities.Northwind
 {
-    public class Vwventas
+    public class Vwvventas
     {
         public string? CustomerId { get; set; }
 
@@ -21,5 +21,8 @@
         public double? TotalVentas { get; set; }
 
         public int? Cantidad { get; set; }
+
+        public int? ProductID { get; set; }
+        public string? ProductName { get; set; }
     }
 }
